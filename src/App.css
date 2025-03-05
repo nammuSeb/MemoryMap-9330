@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.app-container {
+  @apply min-h-screen bg-gray-50;
+}
+
+.memory-marker {
+  @apply w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center text-white cursor-pointer transform transition-transform hover:scale-110;
+}
+
+.memory-cluster {
+  @apply bg-primary-600 text-white rounded-full p-2 flex items-center justify-center font-semibold;
+}
