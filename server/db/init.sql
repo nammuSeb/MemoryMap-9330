@@ -1,15 +1,15 @@
-CREATE DATABASE IF NOT EXISTS memories_db;
-USE memories_db;
-
-CREATE TABLE IF NOT EXISTS memories (
+-- Add to existing init.sql
+CREATE TABLE IF NOT EXISTS users (
   id VARCHAR(36) PRIMARY KEY,
-  title VARCHAR(255) NOT NULL,
-  description TEXT,
-  latitude DECIMAL(10, 8) NOT NULL,
-  longitude DECIMAL(11, 8) NOT NULL,
-  image_url VARCHAR(255),
-  video_url VARCHAR(255),
-  is_public BOOLEAN DEFAULT true,
+  phone_number VARCHAR(15) UNIQUE NOT NULL,
+  verification_code VARCHAR(6),
+  verification_expires TIMESTAMP,
+  is_verified BOOLEAN DEFAULT false,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
+ALTER TABLE memories 
+ADD COLUMN user_id VARCHAR(36),
+ADD COLUMN nsfw_score FLOAT DEFAULT 0,
+ADD FOREIGN KEY (user_id) REFERENCES users(id);

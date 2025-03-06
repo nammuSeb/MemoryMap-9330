@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { MdMyLocation, MdAdd, MdPlace } from 'react-icons/md';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-const MAPBOX_TOKEN = 'YOUR_MAPBOX_TOKEN'; // Replace with your token
+const MAPBOX_TOKEN = 'YOUR_MAPBOX_TOKEN';
 
 const Map = ({ onAddMemory }) => {
   const [viewport, setViewport] = useState({
@@ -46,7 +46,7 @@ const Map = ({ onAddMemory }) => {
         {...viewport}
         width="100%"
         height="100%"
-        mapStyle="mapbox://styles/mapbox/streets-v11"
+        mapStyle="mapbox://styles/mapbox/light-v11"
         mapboxAccessToken={MAPBOX_TOKEN}
         onMove={evt => setViewport(evt.viewport)}
       >
@@ -60,8 +60,10 @@ const Map = ({ onAddMemory }) => {
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="w-8 h-8 bg-blue-500 rounded-full border-2 border-white shadow-lg"
-            />
+              className="w-8 h-8 bg-blue-500 rounded-full border-4 border-white shadow-lg flex items-center justify-center"
+            >
+              <div className="w-4 h-4 bg-blue-300 rounded-full animate-pulse" />
+            </motion.div>
           </Marker>
         )}
 
@@ -71,7 +73,13 @@ const Map = ({ onAddMemory }) => {
             latitude={memory.latitude}
             longitude={memory.longitude}
           >
-            <MdPlace className="w-8 h-8 text-red-500 cursor-pointer" />
+            <motion.div
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              className="cursor-pointer"
+            >
+              <MdPlace className="w-8 h-8 text-red-500 transform -translate-y-full" />
+            </motion.div>
           </Marker>
         ))}
       </ReactMapGL>
@@ -79,7 +87,7 @@ const Map = ({ onAddMemory }) => {
       <div className="absolute bottom-6 right-6 flex flex-col gap-4">
         <motion.button
           whileTap={{ scale: 0.95 }}
-          className="bg-white p-4 rounded-full shadow-lg hover:shadow-xl transition-shadow"
+          className="bg-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all"
           onClick={() => {
             if (userLocation) {
               setViewport(prev => ({
@@ -96,7 +104,7 @@ const Map = ({ onAddMemory }) => {
         
         <motion.button
           whileTap={{ scale: 0.95 }}
-          className="bg-primary-600 p-4 rounded-full shadow-lg hover:shadow-xl transition-shadow"
+          className="bg-primary-600 p-4 rounded-full shadow-lg hover:shadow-xl transition-all"
           onClick={handleAddMemory}
         >
           <MdAdd className="w-6 h-6 text-white" />
